@@ -10,19 +10,19 @@ use App\Http\Controllers\Controller;
 class BukuController extends Controller
 {
     public function TopLikedBooks()
-{
-    $topLikedBooks = Buku::select('buku.*', DB::raw('COUNT(like.id) as `like`'))
-        ->leftJoin('like', 'buku.id', '=', 'like.buku_id')
-        ->groupBy('buku.id', 'buku.judul')
-        ->orderByDesc('like')
-        ->take(3)
-        ->get();
+    {
+        $topLikedBooks = Buku::select('buku.*', DB::raw('COUNT(like.id) as like_count'))
+            ->leftJoin('like', 'buku.id', '=', 'like.buku_id')
+            ->groupBy('buku.id')
+            ->orderByDesc('like_count')
+            ->take(3)
+            ->get();
 
-    return response()->json([
-        'status' => 'success',
-        'data' => $topLikedBooks,
-    ]);
-}
+        return response()->json([
+            'status' => 'success',
+            'data' => $topLikedBooks,
+        ]);
+    }
 
 
     public function topView()
