@@ -11,9 +11,9 @@ class BukuController extends Controller
 {
     public function TopLikedBooks()
     {
-        $topLikedBooks = Buku::select('buku.id', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id', DB::raw('COUNT(like.id) as like_count'))
+        $topLikedBooks = Buku::select('buku.id', 'buku.judul', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id', DB::raw('COUNT(like.id) as like_count'))
             ->leftJoin('like', 'buku.id', '=', 'like.buku_id')
-            ->groupBy('buku.id', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id')
+            ->groupBy('buku.id', 'buku.judul', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id')
             ->orderByDesc('like_count')
             ->take(3)
             ->get();
@@ -23,6 +23,7 @@ class BukuController extends Controller
             'data' => $topLikedBooks,
         ]);
     }
+
     public function topView()
     {
         // Mengambil 3 buku dengan jumlah view terbanyak, diurutkan secara descending
