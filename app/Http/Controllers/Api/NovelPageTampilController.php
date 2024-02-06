@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Isi;
 use App\Models\Buku;
 use App\Models\Komentar;
+use App\Models\Like;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -35,9 +36,18 @@ class NovelPageTampilController extends Controller
                 ->where('id', $id_buku)
                 ->get();
 
+            // Menghitung total like dari buku
+            $total_like = Like::where('buku_id', $id_buku)->count();
+
+            // Menambahkan total like ke setiap buku
+            foreach ($bukus as $buku) {
+                $buku->total_like = $total_like;
+            }
+
             return response()->json([
                 'status' => 'success',
                 'bukus' => $bukus,
+                'total_like' => $total_like, // Menambahkan total like ke respons JSON
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -47,6 +57,7 @@ class NovelPageTampilController extends Controller
             ], 500);
         }
     }
+
     public function IsiBerdasarkanBuku(Request $request)
     {
         // Validasi input
