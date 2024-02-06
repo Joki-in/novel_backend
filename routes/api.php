@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\NovelPageTampilController;
+use App\Http\Controllers\Api\PushLikeAndViewController;
 use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,3 +48,6 @@ Route::post('/search2', [SearchController::class, 'search2']);
 Route::post('/novelpagebuku', [NovelPageTampilController::class, 'BukuDanPenulis']);
 Route::post('/novelpageisi', [NovelPageTampilController::class, 'IsiBerdasarkanBuku']);
 Route::post('/novelpagekomentar', [NovelPageTampilController::class, 'getKomentarByBukuId']);
+
+//PushLikeAndViewController routes
+Route::post('/tambah-view', [PushLikeAndViewController::class, 'tambahView']);
