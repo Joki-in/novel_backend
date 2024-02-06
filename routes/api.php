@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\NovelPageTampilController;
 use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,5 +41,9 @@ Route::get('/top-like', [BukuController::class, 'TopLikedBooks']);
 Route::get('/top-view', [BukuController::class, 'topView']);
 
 //search controller
-Route::post('/search', [SearchController::class, 'search']);
 Route::post('/search2', [SearchController::class, 'search2']);
+
+//NovelPageController routes
+Route::post('/novelpagebuku', [NovelPageTampilController::class, 'BukuDanPenulis']);
+Route::post('/novelpageisi', [NovelPageTampilController::class, 'IsiBerdasarkanBuku']);
+Route::post('/novelpagekomentar', [NovelPageTampilController::class, 'getKomentarByBukuId']);
