@@ -12,13 +12,6 @@ class KomentarController extends Controller
     public function store(Request $request)
     {
         try {
-            // Validasi input
-            $request->validate([
-                'id_buku' => 'required|exists:buku,id',
-                'id_user' => 'required|exists:users,id',
-                'komentar' => 'required|string',
-            ]);
-
             // Buat data Komentar baru
             $komentar = Komentar::create([
                 'id_buku' => $request->id_buku,
