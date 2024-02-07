@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\NovelPageTampilController;
-use App\Http\Controllers\Api\PushLikeAndViewController;
-use App\Http\Controllers\Api\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BukuController;
+use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\KomentarController;
 use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\NovelPageTampilController;
+use App\Http\Controllers\Api\PushLikeAndViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +54,6 @@ Route::post('/novelpagekomentar', [NovelPageTampilController::class, 'getKomenta
 Route::post('/tambah-view', [PushLikeAndViewController::class, 'tambahView']);
 Route::post('/check-like', [PushLikeAndViewController::class, 'checkLike']);
 Route::post('/tambah-like', [PushLikeAndViewController::class, 'store']);
+
+//KomentarController routes
+Route::post('/komentarpost', [KomentarController::class, 'store']);
