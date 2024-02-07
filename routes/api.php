@@ -54,6 +54,7 @@ Route::post('/novelpagekomentar', [NovelPageTampilController::class, 'getKomenta
 Route::post('/tambah-view', [PushLikeAndViewController::class, 'tambahView']);
 Route::post('/check-like', [PushLikeAndViewController::class, 'checkLike']);
 Route::post('/tambah-like', [PushLikeAndViewController::class, 'store']);
+Route::post('/hapus-like', [PushLikeAndViewController::class, 'destroy']);
 
 //KomentarController routes
 Route::post('/komentarpost', [KomentarController::class, 'store']);

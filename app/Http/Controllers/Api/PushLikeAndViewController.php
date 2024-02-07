@@ -81,4 +81,35 @@ class PushLikeAndViewController extends Controller
             return response()->json(['message' => 'Failed to create like', 'error' => $e->getMessage()], 500);
         }
     }
+    public function destroy(Request $request): JsonResponse
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'id_buku' => 'required|exists:buku,id',
+                'id_user' => 'required|exists:users,id',
+            ]);
+
+            // Temukan dan hapus like berdasarkan buku_id dan user_id
+            $like = Like::where('buku_id', $request->id_buku)
+                ->where('user_id', $request->id_user)
+                ->first();
+
+            if ($like) {
+                $like->delete();
+                // Kirimkan respon berhasil
+                return response()->json(['message' => 'Like deleted successfully'], 200);
+            } else {
+                // Jika tidak ditemukan like yang sesuai
+                return response()->json(['message' => 'Like not found'], 404);
+            }
+        } catch (QueryException $e) {
+            // Tangani kesalahan database
+            return response()->json(['message' => 'Failed to delete like', 'error' => $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            // Tangani kesalahan lainnya
+            return response()->json(['message' => 'Failed to delete like', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 }
