@@ -6,6 +6,8 @@ use App\Models\Buku;
 use App\Models\Like;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\JsonResponse;
 
 class PushLikeAndViewController extends Controller
 {
@@ -35,7 +37,7 @@ class PushLikeAndViewController extends Controller
     {
         // Validasi input
         $request->validate([
-            'id_buku' => 'required|exists:bukus,id',
+            'id_buku' => 'required|exists:buku,id',
             'id_user' => 'required|exists:users,id',
         ]);
 
@@ -52,6 +54,31 @@ class PushLikeAndViewController extends Controller
         } else {
             // Jika tidak ditemukan, kirimkan respon 'none'
             return response()->json(['status' => 'none'], 200);
+        }
+    }
+    public function store(Request $request): JsonResponse
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'id_buku' => 'required|exists:buku,id',
+                'id_user' => 'required|exists:users,id',
+            ]);
+
+            // Buat data Like baru
+            $like = Like::create([
+                'buku_id' => $request->id_buku,
+                'user_id' => $request->id_user,
+            ]);
+
+            // Kirimkan respon berhasil
+            return response()->json(['message' => 'Like created successfully', 'like' => $like], 201);
+        } catch (QueryException $e) {
+            // Tangani kesalahan database
+            return response()->json(['message' => 'Failed to create like', 'error' => $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            // Tangani kesalahan lainnya
+            return response()->json(['message' => 'Failed to create like', 'error' => $e->getMessage()], 500);
         }
     }
 }

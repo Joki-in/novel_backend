@@ -49,7 +49,7 @@ class AuthController extends Controller
                 // Save the token to the remember_token column
                 $user->update(['remember_token' => $token]);
 
-                return response()->json(['status' => 'success', 'message' => 'Login successful', 'token' => $token], 200);
+                return response()->json(['status' => 'success', 'message' => 'Login successful', 'token' => $token, 'user_id' => $user->id], 200);
             } else {
                 throw new AuthenticationException('Kombinasi email dan password salah');
             }
