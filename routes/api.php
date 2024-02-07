@@ -56,5 +56,4 @@ Route::post('/check-like', [PushLikeAndViewController::class, 'checkLike']);
 Route::post('/tambah-like', [PushLikeAndViewController::class, 'store']);
 
 //KomentarController routes
-Route::post('/komentar-post', [KomentarController::class, 'store']);
 Route::post('/komentarpost', [KomentarController::class, 'store']);
