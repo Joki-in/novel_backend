@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BukuSeeders::class);
         $this->call(KomentarSeeders::class);
         $this->call(IsiSeeders::class);
-        $this->call(LikeSeeder::class);
+
     }
 }

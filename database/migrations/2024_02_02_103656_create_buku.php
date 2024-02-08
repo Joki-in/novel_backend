@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->integer('view')->default(0);
             $table->string('genre');
             $table->string('cover')->nullable();
+            $table->integer('18+')->default(0);
             $table->foreignId('penulis_id')->constrained('users');
             $table->timestamps();
         });

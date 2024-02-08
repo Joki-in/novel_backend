@@ -16,6 +16,8 @@ class Buku extends Model
         'sinopsis',
         'like',
         'view',
+        'genre',
+        '18+',
         'cover',
         'penulis_id',
     ];

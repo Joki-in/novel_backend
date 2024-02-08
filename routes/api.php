@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Api\CreateBukuController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\IsiController;
 use Illuminate\Support\Facades\Route;
@@ -61,3 +62,8 @@ Route::post('/komentarpost', [KomentarController::class, 'store']);
 
 //IsiController routes
 Route::post('/getisibuku', [IsiController::class, 'IsiByIdBuku']);
+
+//CreateBukuController routes
+Route::post('/createbuku', [CreateBukuController::class, 'store']);
+Route::post('/updatecover', [CreateBukuController::class, 'updateCover']);
+Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);

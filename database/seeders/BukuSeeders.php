@@ -23,8 +23,9 @@ class BukuSeeders extends Seeder
                 'sinopsis' => $faker->paragraph,
                 'view' => rand(0, 100),
                 'genre' => $faker->randomElement(['fiksi', 'drama', 'horor']),
-                'cover' => $faker->imageUrl($width = 640, $height = 480),
+                'cover' => '1707365655_2.jpg',
                 'penulis_id' => 1,
+                '18+' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
