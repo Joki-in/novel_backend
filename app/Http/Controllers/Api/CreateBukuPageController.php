@@ -78,34 +78,5 @@ class CreateBukuPageController extends Controller
 
         return response()->json(['message' => 'Data has been deleted successfully']);
     }
-    public function updateCover(Request $request)
-    {
-        try {
-            $request->validate([
-                'id' => 'required|exists:buku,id',
-                'cover' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
 
-            $buku = Buku::findOrFail($request->id);
-
-            if ($buku->cover) {
-                $oldCoverPath = public_path('coverbuku/' . $buku->cover);
-                if (file_exists($oldCoverPath)) {
-                    unlink($oldCoverPath);
-                }
-            }
-
-            $cover = $request->file('cover');
-            $coverName = $cover->hashName();
-
-            $cover->move(public_path('coverbuku'), $coverName);
-
-            $buku->cover = $coverName;
-            $buku->save();
-
-            return response()->json(['message' => 'Foto cover berhasil diupdate', 'id' => $buku->id], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
-    }
 }
