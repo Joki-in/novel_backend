@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\CreateBukuController;
+use App\Http\Controllers\Api\CreateBukuPageController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\IsiController;
 use Illuminate\Support\Facades\Route;
@@ -67,3 +68,6 @@ Route::post('/getisibuku', [IsiController::class, 'IsiByIdBuku']);
 Route::post('/createbuku', [CreateBukuController::class, 'store']);
 Route::post('/updatecover', [CreateBukuController::class, 'updateCover']);
 Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);
+
+//create buku page routes
+Route::post('/createbukushow', [CreateBukuPageController::class, 'createBukuPageShow']);
