@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Isi;
 use App\Models\Buku;
+use App\Models\Like;
+use App\Models\Komentar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,5 +43,30 @@ class CreateBukuPageController extends Controller
                 'MESSAGE' => $e->getMessage(),
             ], 500);
         }
+    }
+    public function deleteDataByBukuId(Request $request)
+    {
+        // Mengekstrak id_buku dari body permintaan
+        $id = $request->input('id_buku');
+
+        // Cek apakah data buku tersedia
+        $buku = Buku::find($id);
+        if (!$buku) {
+            return response()->json(['error' => 'Data not found'], 404);
+        }
+
+        // Menghapus data dari model Isi berdasarkan id_buku
+        Isi::where('id_buku', $id)->delete();
+
+        // Menghapus data dari model Komentar berdasarkan id_buku
+        Komentar::where('id_buku', $id)->delete();
+
+        // Menghapus data dari model Like berdasarkan buku_id
+        Like::where('buku_id', $id)->delete();
+
+        // Menghapus data dari model Buku berdasarkan id_buku
+        $buku->delete();
+
+        return response()->json(['message' => 'Data has been deleted successfully']);
     }
 }

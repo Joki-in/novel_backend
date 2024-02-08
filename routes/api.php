@@ -71,3 +71,4 @@ Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);
 
 //create buku page routes
 Route::post('/createbukushow', [CreateBukuPageController::class, 'createBukuPageShow']);
+Route::post('/deletebuku', [CreateBukuPageController::class, 'deleteDataByBukuId']);
