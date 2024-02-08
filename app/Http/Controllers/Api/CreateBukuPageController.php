@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Buku;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CreateBukuPageController extends Controller
@@ -19,31 +18,26 @@ class CreateBukuPageController extends Controller
 
             $idUser = $request->input('id_user');
 
-            $data = Buku::select(
-                'buku.id',
-                'buku.judul',
-                'buku.sinopsis',
-                'buku.view',
-                'buku.genre',
-                'buku.cover',
-                'buku.penulis_id',
-                DB::raw('COUNT(like.id) as like_count')
-            )
-                ->leftJoin('like', 'buku.id', '=', 'like.buku_id')
-                ->groupBy('buku.id', 'buku.judul', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id')
-                ->orderByDesc('like_count')
-                ->where('buku.penulis_id', $idUser)
-                ->get();
+            // Mengambil semua data buku milik pengguna dengan ID yang diberikan
+            $buku = Buku::where('id_user', $idUser)->get();
 
+            // Memeriksa apakah ada data buku yang tersedia
+            if ($buku->isEmpty()) {
+                return response()->json([
+                    'MESSAGE' => 'Tidak ada data buku yang tersedia untuk pengguna ini.',
+                    'DATA' => [],
+                ], 404);
+            }
+
+            // Mengembalikan data buku dalam format JSON
             return response()->json([
-                'status' => 'success',
-                'data' => $data,
+                'MESSAGE' => 'Berhasil mendapatkan data buku.',
+                'DATA' => $buku,
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage(),
+                'ERROR' => 'Terjadi kesalahan saat memproses permintaan.',
+                'MESSAGE' => $e->getMessage(),
             ], 500);
         }
     }
