@@ -19,7 +19,7 @@ class CreateBukuPageController extends Controller
             $idUser = $request->input('id_user');
 
             // Mengambil semua data buku milik pengguna dengan ID yang diberikan
-            $buku = Buku::where('id_user', $idUser)->get();
+            $buku = Buku::where('penulis_id', $idUser)->get();
 
             // Memeriksa apakah ada data buku yang tersedia
             if ($buku->isEmpty()) {
