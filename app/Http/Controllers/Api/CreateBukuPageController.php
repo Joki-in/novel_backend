@@ -8,23 +8,24 @@ use App\Models\Like;
 use App\Models\Komentar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class CreateBukuPageController extends Controller
 {
     public function createBukuPageShow(Request $request)
     {
         try {
-            // Validasi request
+
             $request->validate([
                 'id_user' => 'required|numeric|exists:users,id',
             ]);
 
             $idUser = $request->input('id_user');
 
-            // Mengambil semua data buku milik pengguna dengan ID yang diberikan
+
             $buku = Buku::where('penulis_id', $idUser)->get();
 
-            // Memeriksa apakah ada data buku yang tersedia
+
             if ($buku->isEmpty()) {
                 return response()->json([
                     'MESSAGE' => 'Tidak ada data buku yang tersedia untuk pengguna ini.',
@@ -32,7 +33,7 @@ class CreateBukuPageController extends Controller
                 ], 404);
             }
 
-            // Mengembalikan data buku dalam format JSON
+
             return response()->json([
                 'MESSAGE' => 'Berhasil mendapatkan data buku.',
                 'DATA' => $buku,
@@ -46,27 +47,67 @@ class CreateBukuPageController extends Controller
     }
     public function deleteDataByBukuId(Request $request)
     {
-        // Mengekstrak id_buku dari body permintaan
+
         $id = $request->input('id_buku');
 
-        // Cek apakah data buku tersedia
+
         $buku = Buku::find($id);
         if (!$buku) {
             return response()->json(['error' => 'Data not found'], 404);
         }
 
-        // Menghapus data dari model Isi berdasarkan id_buku
+
+        if ($buku->cover) {
+            $coverPath = public_path('coverbuku/' . $buku->cover);
+            if (file_exists($coverPath)) {
+                unlink($coverPath);
+            }
+        }
+
+
         Isi::where('id_buku', $id)->delete();
 
-        // Menghapus data dari model Komentar berdasarkan id_buku
+
         Komentar::where('id_buku', $id)->delete();
 
-        // Menghapus data dari model Like berdasarkan buku_id
+
         Like::where('buku_id', $id)->delete();
 
-        // Menghapus data dari model Buku berdasarkan id_buku
+
         $buku->delete();
 
         return response()->json(['message' => 'Data has been deleted successfully']);
+    }
+    public function updateCover(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required|exists:buku,id',
+            'cover' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        $buku = Buku::findOrFail($request->id);
+
+
+        if ($buku->cover) {
+            $oldCoverPath = public_path('coverbuku/' . $buku->cover);
+            if (file_exists($oldCoverPath)) {
+                unlink($oldCoverPath);
+            }
+        }
+
+
+        $cover = $request->file('cover');
+        $coverName = $cover->hashName();
+
+
+        $cover->move(public_path('coverbuku'), $coverName);
+
+
+        $buku->cover = $coverName;
+        $buku->save();
+
+        return response()->json(['message' => 'Foto cover berhasil diupdate', 'id' => $buku->id], 200);
     }
 }

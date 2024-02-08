@@ -69,6 +69,8 @@ Route::post('/createbuku', [CreateBukuController::class, 'store']);
 Route::post('/updatecover', [CreateBukuController::class, 'updateCover']);
 Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);
 
+Route::post('/updatecover', [CreateBukuPageController::class, 'updateCover']);
+
 //create buku page routes
 Route::post('/createbukushow', [CreateBukuPageController::class, 'createBukuPageShow']);
 Route::post('/deletebuku', [CreateBukuPageController::class, 'deleteDataByBukuId']);
