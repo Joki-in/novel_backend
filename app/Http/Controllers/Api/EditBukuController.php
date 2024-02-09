@@ -60,7 +60,7 @@ class EditBukuController extends Controller
         try {
             // Validasi input
             $validatedData = $request->validate([
-                'id_buku' => 'required|exists:buku,id',
+                'id_buku' => 'string',
                 'chapter' => 'required',
                 'isi' => 'required',
             ]);
