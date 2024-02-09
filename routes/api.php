@@ -76,4 +76,4 @@ Route::post('/updatecover', [EditBukuController::class, 'updateCover']);
 Route::post('/createbukushow', [CreateBukuPageController::class, 'createBukuPageShow']);
 Route::post('/deletebuku', [CreateBukuPageController::class, 'deleteDataByBukuId']);
 Route::post('/delete-isi', [EditBukuController::class, 'deleteIsiByIdFromBody']);
-
+Route::post('/update-isi', [EditBukuController::class, 'editIsi']);

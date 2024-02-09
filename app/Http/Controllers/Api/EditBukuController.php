@@ -6,6 +6,7 @@ use App\Models\Isi;
 use App\Models\Buku;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class EditBukuController extends Controller
 {
@@ -41,9 +42,9 @@ class EditBukuController extends Controller
     }
     public function deleteIsiByIdFromBody(Request $request)
     {
-        // Validasi input
+
         $request->validate([
-            'isi_id' => 'required|exists:isi,id' // Memastikan bahwa isi_id ada dalam tabel isi
+            'isi_id' => 'required|exists:isi,id'
         ]);
 
         $isiId = $request->isi_id;
@@ -53,5 +54,32 @@ class EditBukuController extends Controller
             return response()->json(['message' => 'Data Isi berhasil dihapus'], 200);
         }
         return response()->json(['message' => 'Data Isi tidak ditemukan'], 404);
+    }
+    public function editIsi(Request $request)
+    {
+        try {
+            // Validasi input
+            $validator = $request->validate([
+                'id' => 'required|exists:isi,id',
+                'chapter' => 'required',
+                'isi' => 'required',
+            ]);
+
+            // Cari data isi berdasarkan ID
+            $isi = Isi::findOrFail($request->id);
+
+            // Update data isi
+            $isi->chapter = $request->chapter;
+            $isi->isi = $request->isi;
+            $isi->save();
+
+            return response()->json(['message' => 'Data isi berhasil diperbarui'], 200);
+        } catch (ValidationException $e) {
+            // Tangani jika validasi gagal
+            return response()->json(['message' => $e->validator->errors()->first()], 422);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error lainnya
+            return response()->json(['message' => 'Gagal memperbarui data isi'], 500);
+        }
     }
 }
