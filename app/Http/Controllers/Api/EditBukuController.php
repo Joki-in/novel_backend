@@ -55,6 +55,25 @@ class EditBukuController extends Controller
         }
         return response()->json(['message' => 'Data Isi tidak ditemukan'], 404);
     }
+    public function createIsi(Request $request)
+    {
+        try {
+            // Validasi input
+            $validatedData = $request->validate([
+                'id_buku' => 'required|exists:buku,id',
+                'chapter' => 'required',
+                'isi' => 'required',
+            ]);
+
+            // Membuat data baru
+            $isi = Isi::create($validatedData);
+
+            return response()->json(['message' => 'Data isi berhasil dibuat', 'data' => $isi], 201);
+        } catch (\Exception $e) {
+            // Tangani jika terjadi error
+            return response()->json(['message' => 'Gagal membuat data isi', 'error' => $e->getMessage()], 500);
+        }
+    }
     public function editIsi(Request $request)
     {
         try {
