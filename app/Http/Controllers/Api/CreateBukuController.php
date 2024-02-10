@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class CreateBukuController extends Controller
 {
-    public function store(Request $request)
+    public function storeBuku(Request $request)
     {
         try {
             $request->validate([

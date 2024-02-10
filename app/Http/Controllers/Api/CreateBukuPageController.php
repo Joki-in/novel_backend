@@ -9,6 +9,7 @@ use App\Models\Komentar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class CreateBukuPageController extends Controller
 {

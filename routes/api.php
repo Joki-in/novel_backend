@@ -66,7 +66,7 @@ Route::post('/komentarpost', [KomentarController::class, 'store']);
 Route::post('/getisibuku', [IsiController::class, 'IsiByIdBuku']);
 
 //CreateBukuController routes
-Route::post('/createbuku', [CreateBukuController::class, 'store']);
+Route::post('/createbuku', [CreateBukuController::class, 'storeBuku']);
 Route::post('/updatecover', [CreateBukuController::class, 'updateCover']);
 Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);
 Route::post('/updateBuku', [EditBukuController::class, 'updateBuku']);
