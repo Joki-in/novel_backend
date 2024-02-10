@@ -14,7 +14,6 @@ class Buku extends Model
     protected $fillable = [
         'judul',
         'sinopsis',
-        'like',
         'view',
         'genre',
         '18+',

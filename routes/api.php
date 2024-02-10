@@ -69,7 +69,7 @@ Route::post('/getisibuku', [IsiController::class, 'IsiByIdBuku']);
 Route::post('/createbuku', [CreateBukuController::class, 'store']);
 Route::post('/updatecover', [CreateBukuController::class, 'updateCover']);
 Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);
-
+Route::post('/updateBuku', [EditBukuController::class, 'updateBuku']);
 Route::post('/updatecover', [EditBukuController::class, 'updateCover']);
 
 //create buku page routes

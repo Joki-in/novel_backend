@@ -101,4 +101,36 @@ class EditBukuController extends Controller
             return response()->json(['message' => 'Gagal memperbarui data isi'], 500);
         }
     }
+    public function updateBuku(Request $request)
+    {
+        try {
+            // Validasi request
+            $validatedData = $request->validate([
+                'id' => 'required|exists:buku,id',
+                'judul' => 'required|string',
+                'sinopsis' => 'required|string',
+                'genre' => 'required|string',
+                '18+' => 'required|boolean',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan pada validasi data.',
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        // Cari data buku berdasarkan ID
+        $buku = Buku::findOrFail($validatedData['id']);
+
+        // Update data kecuali kolom 'view', 'penulis_id', dan 'cover'
+        $updateData = collect($validatedData)->except(['id', 'view', 'penulis_id', 'cover'])->toArray();
+        $buku->update($updateData);
+
+        // Response
+        return response()->json([
+            'message' => 'Data buku berhasil diupdate.',
+            'data' => $buku
+        ], 200);
+    }
+
 }
