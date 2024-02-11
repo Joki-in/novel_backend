@@ -109,6 +109,7 @@ class AuthController extends Controller
 
             // Menghapus remember_token dari pengguna
             $user->update(['remember_token' => null]);
+            $user->update(['fcm_token' => null]);
 
             return response()->json(['status' => 'success', 'message' => 'Logout successful'], 200);
         } catch (\Exception $e) {
