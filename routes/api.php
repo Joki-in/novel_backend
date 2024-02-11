@@ -69,7 +69,8 @@ Route::post('/getisibuku', [IsiController::class, 'IsiByIdBuku']);
 //CreateBukuController routes
 Route::post('/createbuku', [CreateBukuController::class, 'storeBuku']);
 Route::post('/updatecover', [CreateBukuController::class, 'updateCover']);
-Route::post('/createIsi', [CreateBukuController::class, 'createIsi']);
+
+Route::post('/create-isi', [CreateBukuController::class, 'createIsi']);
 Route::post('/updateBuku', [EditBukuController::class, 'updateBuku']);
 Route::post('/updatecover', [EditBukuController::class, 'updateCover']);
 
@@ -77,7 +78,6 @@ Route::post('/updatecover', [EditBukuController::class, 'updateCover']);
 Route::post('/createbukushow', [CreateBukuPageController::class, 'createBukuPageShow']);
 Route::post('/deletebuku', [CreateBukuPageController::class, 'deleteDataByBukuId']);
 Route::post('/delete-isi', [EditBukuController::class, 'deleteIsiByIdFromBody']);
-Route::post('/create-isi', [EditBukuController::class, 'createIsi']);
 Route::post('/update-isi', [EditBukuController::class, 'editIsi']);
 
 Route::post('/send-account-activated-notification', [notifcontroller::class, 'sendAccountActivatedNotification']);
