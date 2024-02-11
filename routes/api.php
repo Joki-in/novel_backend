@@ -1,15 +1,16 @@
 <?php
-use App\Http\Controllers\Api\CreateBukuController;
-use App\Http\Controllers\Api\CreateBukuPageController;
-use App\Http\Controllers\Api\EditBukuController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\IsiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\IsiController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BukuController;
+use App\Http\Controllers\Api\notifcontroller;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\EditBukuController;
 use App\Http\Controllers\Api\KomentarController;
+use App\Http\Controllers\Api\CreateBukuController;
+use App\Http\Controllers\Api\CreateBukuPageController;
 use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\NovelPageTampilController;
 use App\Http\Controllers\Api\PushLikeAndViewController;
@@ -78,3 +79,5 @@ Route::post('/deletebuku', [CreateBukuPageController::class, 'deleteDataByBukuId
 Route::post('/delete-isi', [EditBukuController::class, 'deleteIsiByIdFromBody']);
 Route::post('/create-isi', [EditBukuController::class, 'createIsi']);
 Route::post('/update-isi', [EditBukuController::class, 'editIsi']);
+
+Route::post('/send-account-activated-notification', [notifcontroller::class, 'sendAccountActivatedNotification']);
