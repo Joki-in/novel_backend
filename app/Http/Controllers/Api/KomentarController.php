@@ -72,7 +72,6 @@ class KomentarController extends Controller
             return response()->json([
                 'message' => 'Komentar created successfully',
                 'komentar' => $komentar,
-                'buku' => $buku,
                 "nama" => $namaPengguna
             ], 201);
         } catch (ValidationException $e) {
