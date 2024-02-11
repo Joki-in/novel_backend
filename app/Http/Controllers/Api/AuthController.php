@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+
 
 
 class AuthController extends Controller
@@ -39,6 +41,21 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        // Validation rules for the request
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required',
+            'fcm_token' => 'required',
+        ];
+
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->first()], 400);
+        }
+
         try {
             $credentials = $request->only('email', 'password');
 
@@ -49,7 +66,16 @@ class AuthController extends Controller
                 // Save the token to the remember_token column
                 $user->update(['remember_token' => $token]);
 
-                return response()->json(['status' => 'success', 'message' => 'Login successful', 'token' => $token, 'user_id' => $user->id], 200);
+                // Update FCM token
+                $fcmToken = $request->input('fcm_token');
+                $user->update(['fcm_token' => $fcmToken]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Login successful',
+                    'token' => $token,
+                    'user_id' => $user->id
+                ], 200);
             } else {
                 throw new AuthenticationException('Kombinasi email dan password salah');
             }
