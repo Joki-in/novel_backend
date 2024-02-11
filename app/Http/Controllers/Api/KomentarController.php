@@ -63,7 +63,8 @@ class KomentarController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not found'], 404);
             }
-            $namaPengguna = $user->name;
+            $namaPenggunas = User::where('id', $request->id_user)->first();
+            $namaPengguna = $namaPenggunas->name;
 
             // Kirim notifikasi menggunakan method notify() pada user
             $user->notify(new PushNotifKomentar($komentar, $namaPengguna));
