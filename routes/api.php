@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Api\FavoriteBukuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\IsiController;
@@ -65,6 +66,7 @@ Route::post('/komentarpost', [KomentarController::class, 'store']);
 
 //IsiController routes
 Route::post('/getisibuku', [IsiController::class, 'IsiByIdBuku']);
+Route::post('/favoritebuku', [FavoriteBukuController::class, 'favoriteBook']);
 
 //CreateBukuController routes
 Route::post('/createbuku', [CreateBukuController::class, 'storeBuku']);
