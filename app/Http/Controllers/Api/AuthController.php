@@ -88,19 +88,14 @@ class AuthController extends Controller
                 $user->update(['fcm_token' => $fcmToken]);
                 $tanggal_lahir = $user->tanggal_lahir;
                 $umur = Carbon::parse($tanggal_lahir)->age;
-                $batasan_usia = 0;
-                if ($umur >= 18) {
-                    $batasan_usia = 1;
-                } else {
-                    $batasan_usia = 0;
-                }
+
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Login successful',
                     'token' => $token,
                     'user_id' => $user->id,
                     'status_regis' => $user->status,
-                    'batasan_usia' => $batasan_usia,
+                    'umur' => $umur,
                 ], 200);
             } else {
                 throw new AuthenticationException('Kombinasi email dan password salah');
