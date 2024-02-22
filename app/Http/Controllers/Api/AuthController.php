@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -85,13 +86,21 @@ class AuthController extends Controller
                 // Update FCM token
                 $fcmToken = $request->input('fcm_token');
                 $user->update(['fcm_token' => $fcmToken]);
-
+                $tanggal_lahir = $user->tanggal_lahir;
+                $umur = Carbon::parse($tanggal_lahir)->age;
+                $batasan_usia = 0;
+                if ($umur >= 18) {
+                    $batasan_usia = 1;
+                } else {
+                    $batasan_usia = 0;
+                }
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Login successful',
                     'token' => $token,
                     'user_id' => $user->id,
-                    'status_regis' => $user->status
+                    'status_regis' => $user->status,
+                    'batasan_usia' => $batasan_usia,
                 ], 200);
             } else {
                 throw new AuthenticationException('Kombinasi email dan password salah');
