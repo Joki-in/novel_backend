@@ -65,6 +65,7 @@ class ForgotPasswordController extends Controller
             if ($user->otp == $request->otp) {
                 // Reset OTP setelah digunakan
                 $user->otp = null;
+                $user->status = 1;
                 $user->save();
 
                 return response()->json(['status' => 'success'], 200);
