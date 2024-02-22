@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
@@ -22,23 +23,38 @@ class AuthController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:8',
+                'tanggal_lahir' => 'nullable|date',
                 'alamat' => 'required|string|max:255',
             ]);
 
-            $user = User::create([
+            $user = new User([
                 'name' => $request->name,
                 'email' => $request->email,
-                'alamat' => $request->alamat,
                 'password' => Hash::make($request->password),
+                'tanggal_lahir' => $request->tanggal_lahir, // Tambahkan ini jika tersedia
+                'alamat' => $request->alamat,
             ]);
 
-            return response()->json(['status' => 'success', 'message' => 'User registered successfully',], 201);
+            $user->save();
+
+            // Kirim email OTP
+            $otp = random_int(1000, 9999);
+            $user->otp = $otp;
+            $user->save();
+
+            Mail::raw('Your OTP is: ' . $otp, function ($message) use ($user) {
+                $message->to($user->email)->subject('Your OTP');
+            });
+
+            return response()->json(['status' => 'success', 'message' => 'User registered successfully. OTP sent to your email.'], 201);
         } catch (ValidationException $e) {
             return response()->json(['status' => 'error', 'message' => 'Validation error', 'errors' => $e->errors()], 422);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => 'Failed to register user', 'error' => $e->getMessage()], 500);
         }
     }
+
+
     public function login(Request $request)
     {
         // Validation rules for the request

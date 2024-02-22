@@ -18,11 +18,13 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'alamat' => 'Jl. Raya Cikarang',
+            'tanggal_lahir' => '2000-01-01',
             'password' => Hash::make('secret'),
         ]);
         DB::table('users')->insert([
             'name' => 'rizqi',
             'email' => 'semuamana@gmail.com',
+            'tanggal_lahir' => '2000-01-01',
             'alamat' => 'Jl. mantap',
             'password' => Hash::make('1'),
         ]);

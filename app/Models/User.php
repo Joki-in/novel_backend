@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'alamat',
         'foto',
+        'tanggal_lahir',
         'password',
         'email_verified_at',
         'remember_token',
