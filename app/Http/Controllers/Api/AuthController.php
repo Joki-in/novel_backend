@@ -90,7 +90,8 @@ class AuthController extends Controller
                     'status' => 'success',
                     'message' => 'Login successful',
                     'token' => $token,
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'status_regis' => $user->status
                 ], 200);
             } else {
                 throw new AuthenticationException('Kombinasi email dan password salah');
