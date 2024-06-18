@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('tanggal_lahir');
             $table->string('status')->nullable();
             $table->string('foto')->nullable();
+            $table->string('role')->default('user');
             $table->string('password');
             $table->string('otp')->nullable();
             $table->text('fcm_token')->nullable();

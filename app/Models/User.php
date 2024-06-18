@@ -28,6 +28,7 @@ class User extends Authenticatable
         'remember_token',
         'fcm_token',
         'otp',
+        'role'
     ];
 
     /**
