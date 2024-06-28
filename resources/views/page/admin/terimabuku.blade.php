@@ -30,7 +30,7 @@
                                             <th class="text-center">Genre</th>
                                             <th class="text-center">18+</th>
                                             <th class='text-center'>Penulis</th>
-                                            <th class="text-center">Sinopsis</th>
+                                            <th class="text-center">Sinopsis dan cover</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -59,7 +59,7 @@
                                                         View Sinopsis
                                                     </button>
                                                 </td>
-                                                <td>
+                                                <td class="d-flex justify-content-between align-items-center">
                                                     <form id="form-terima-{{ $item->id }}"
                                                         action="{{ route('terima-buku', ['id' => $item->id]) }}"
                                                         method="POST">
@@ -68,6 +68,10 @@
                                                         <button type="submit" class="btn btn-icon icon-left btn-success"><i
                                                                 class="fas fa-check"></i> Terima</button>
                                                     </form>
+                                                    <button type="button" class="btn btn-icon icon-left btn-danger"
+                                                        data-toggle="modal" data-target="#tolakModal{{ $item->id }}">
+                                                        <i class="fas fa-times"></i> Tolak
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -94,11 +98,53 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        {{ $item->sinopsis }}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="{{ asset('/coverbuku/' . $item->cover) }}" class="img-fluid" alt="Cover Buku">
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{ $item->judul }}</h5>
+                                <p>{{ $item->sinopsis }}</p>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Tolak -->
+        <div class="modal fade" id="tolakModal{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="tolakModalLabel{{ $item->id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="form-tolak-{{ $item->id }}" action="{{ route('tolak-buku', ['id' => $item->id]) }}"
+                        method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="tolakModalLabel{{ $item->id }}">Tolak Buku</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="alasan">Alasan Penolakan</label>
+                                <textarea class="form-control" id="alasan" name="alasan" rows="3" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-danger">Tolak</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

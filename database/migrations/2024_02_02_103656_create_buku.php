@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('cover')->nullable();
             $table->integer('18+')->default(0);
             $table->string('status')->default('belum diterima');
+            $table->string('alasan')->nullable();
             $table->foreignId('penulis_id')->constrained('users');
             $table->timestamps();
         });

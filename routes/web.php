@@ -32,6 +32,7 @@ Route::middleware(['islogin'])->group(function () {
     //terima buku
     Route::get('/terima-buku-admin', [TerimaBukuController::class, 'index'])->name('terima-buku.index');
     Route::put('/buku/{id}/terima', [TerimaBukuController::class, 'terimaBuku'])->name('terima-buku');
+    Route::put('/buku/{id}/tolak', [TerimaBukuController::class, 'tolakBuku'])->name('tolak-buku');
 
 });
 

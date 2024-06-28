@@ -10,7 +10,7 @@ class Isi extends Model
     use HasFactory;
     protected $table = 'isi';
 
-    protected $fillable = ['id_buku', 'chapter', 'isi', 'status'];
+    protected $fillable = ['id_buku', 'chapter', 'isi', 'status', 'alasan'];
 
 
     public function buku()

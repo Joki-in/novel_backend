@@ -16,15 +16,9 @@
                 <li class="dropdown {{ Request::path() === 'terima-buku-admin' ? 'active' : '' }}"><a class="nav-link"
                         href="/terima-buku-admin"><i data-feather="book"></i><span>Terima Buku</span></a>
                 </li>
-                <li class="dropdown {{ Request::path() === 'lomba' ? 'active' : '' }}"><a class="nav-link"
-                        href="/lomba"><i data-feather="hard-drive"></i><span>Lomba</span></a>
-                </li>
-                <li class="menu-header">User Lomba</li>
-                <li class="dropdown {{ Request::path() === 'data-pendaftaran' ? 'active' : '' }}"><a class="nav-link"
-                        href="/data-pendaftaran"><i data-feather="clipboard"></i><span>Data Pendaftaran</span></a>
-                </li>
-                <li class="dropdown {{ Request::path() === 'data-pembayaran' ? 'active' : '' }}"><a class="nav-link"
-                        href="/data-pembayaran"><i data-feather="dollar-sign"></i><span>Data Pembayaran</span></a>
+                <li class="dropdown {{ Request::path() === 'terima-isi-admin' ? 'active' : '' }}"><a class="nav-link"
+                        href="/terima-isi-admin"><i data-feather="file-text"></i><span>Terima
+                            Isi</span></a>
                 </li>
             </ul>
         </aside>
@@ -35,7 +29,7 @@
             <div class="sidebar-brand">
                 <a href="/dashboard"> <img alt="image" src="{{ asset('admin/assets/img/logo.png') }}"
                         class="header-logo" />
-                    <span class="logo-name">比赛</span>
+                    <span class="logo-name">Share Novel</span>
                 </a>
             </div>
             <ul class="sidebar-menu">

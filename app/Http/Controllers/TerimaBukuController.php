@@ -38,4 +38,33 @@ class TerimaBukuController extends Controller
 
         return redirect()->route('terima-buku.index')->with('notification', $notification);
     }
+    public function tolakBuku(Request $request, $id)
+    {
+        // Temukan buku berdasarkan ID
+        $buku = Buku::find($id);
+
+        // Pastikan buku ditemukan
+        if (!$buku) {
+            return response()->json(['message' => 'Buku tidak ditemukan.'], 404);
+        }
+
+        // Validasi alasan penolakan
+        $request->validate([
+            'alasan' => 'required|string|max:255',
+        ]);
+
+        // Update status menjadi "ditolak" dan simpan alasan
+        $buku->status = 'ditolak';
+        $buku->alasan = $request->alasan;
+        $buku->save();
+
+        // Berikan respons sukses
+        $notification = [
+            'title' => 'Buku Ditolak',
+            'text' => 'Buku berhasil ditolak dengan alasan: ' . $request->alasan,
+            'type' => 'success',
+        ];
+
+        return redirect()->route('terima-buku.index')->with('notification', $notification);
+    }
 }
