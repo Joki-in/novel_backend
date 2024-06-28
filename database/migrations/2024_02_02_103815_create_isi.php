@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('id_buku')->constrained('buku');
             $table->string('chapter');
+            $table->string('status')->default('belum diterima');
             $table->longText('isi');
             $table->timestamps();
         });

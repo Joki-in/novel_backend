@@ -18,6 +18,7 @@ class Buku extends Model
         'genre',
         '18+',
         'cover',
+        'status',
         'penulis_id',
     ];
 

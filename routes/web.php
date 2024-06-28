@@ -1,7 +1,8 @@
 <?php
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TerimaBukuController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -27,6 +28,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['islogin'])->group(function () {
     Route::get('/dashboardAdmin', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    //terima buku
+    Route::get('/terima-buku-admin', [TerimaBukuController::class, 'index'])->name('terima-buku.index');
+    Route::put('/buku/{id}/terima', [TerimaBukuController::class, 'terimaBuku'])->name('terima-buku');
 
 });
 

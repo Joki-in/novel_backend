@@ -13,8 +13,8 @@
                     <a href="/dashboardAdmin" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
                 </li>
 
-                <li class="dropdown {{ Request::path() === 'user' ? 'active' : '' }}"><a class="nav-link"
-                        href="/user"><i data-feather="user"></i><span>penambahan</span></a>
+                <li class="dropdown {{ Request::path() === 'terima-buku-admin' ? 'active' : '' }}"><a class="nav-link"
+                        href="/terima-buku-admin"><i data-feather="book"></i><span>Terima Buku</span></a>
                 </li>
                 <li class="dropdown {{ Request::path() === 'lomba' ? 'active' : '' }}"><a class="nav-link"
                         href="/lomba"><i data-feather="hard-drive"></i><span>Lomba</span></a>
@@ -43,8 +43,6 @@
                 <li class="dropdown {{ Request::path() === 'dashboard' ? 'active' : '' }}">
                     <a href="/dashboard" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
                 </li>
-
-
                 </li>
                 <li class="menu-header">User Lomba</li>
                 <li class="dropdown {{ Request::path() === 'pendaftaran' ? 'active' : '' }}"><a class="nav-link"

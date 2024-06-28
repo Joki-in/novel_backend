@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Isi extends Model
 {
     use HasFactory;
-    protected $table = 'isi'; // Nama tabel
+    protected $table = 'isi';
 
-    protected $fillable = ['id_buku', 'chapter', 'isi']; // Kolom yang dapat diisi
+    protected $fillable = ['id_buku', 'chapter', 'isi', 'status'];
 
-    // Relasi dengan model Buku
+
     public function buku()
     {
         return $this->belongsTo(Buku::class, 'id_buku');
