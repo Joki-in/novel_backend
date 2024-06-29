@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TerimaIsiController;
+use App\Http\Controllers\TambahBukuController;
 use App\Http\Controllers\TerimaBukuController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -27,6 +29,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::middleware(['islogin'])->group(function () {
+    //Admin
+    //Dashboard
     Route::get('/dashboardAdmin', [DashboardController::class, 'index'])->name('dashboard.index');
 
     //terima buku
@@ -34,5 +38,19 @@ Route::middleware(['islogin'])->group(function () {
     Route::put('/buku/{id}/terima', [TerimaBukuController::class, 'terimaBuku'])->name('terima-buku');
     Route::put('/buku/{id}/tolak', [TerimaBukuController::class, 'tolakBuku'])->name('tolak-buku');
 
+    //terima buku
+    Route::get('/terima-isi-admin', [TerimaIsiController::class, 'index'])->name('terima-isi.index');
+    Route::put('/isi/{id}/terima', [TerimaIsiController::class, 'terimaIsi'])->name('terima-isi');
+    Route::put('/isi/{id}/tolak', [TerimaIsiController::class, 'tolakIsi'])->name('tolak-isi');
+
+
+    //User
+    //Dashboard
+    Route::get('/dashboardUser', [DashboardController::class, 'indexUser'])->name('dashboard.user.index');
+
+    //tambah buku 
+    Route::get('/tambahkan-buku', [TambahBukuController::class, 'index'])->name('tambah-buku.index');
+    Route::post('/tambah-buku', [TambahBukuController::class, 'store'])->name('buku.store');
+    Route::delete('/buku/{buku}', [TambahBukuController::class, 'destroy'])->name('buku.destroy');
 });
 

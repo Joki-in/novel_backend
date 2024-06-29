@@ -25,8 +25,13 @@ class AuthController extends Controller
 
         // Coba untuk melakukan otentikasi pengguna
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
-            return redirect()->intended('/dashboardAdmin');
+            if ($user->role == 'admin') {
+                return redirect()->intended('/dashboardAdmin');
+            } elseif ($user->role == 'user') {
+                return redirect()->intended('/dashboardUser');
+            }
         }
 
         // Jika otentikasi gagal, kembalikan ke halaman login dengan pesan kesalahan

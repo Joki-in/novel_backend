@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Models\Isi;
 use App\Models\Buku;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $userCount = User::count();
@@ -18,52 +17,13 @@ class DashboardController extends Controller
         $book18 = Buku::where('18+', 1)->count();
         return view('page.admin.dashboard', compact('userCount', 'bookCount', 'book18'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function indexUser()
     {
-        //
-    }
+        $bookCount = Buku::where('penulis_id', Auth::id())->count();
+        $isiCount = Isi::whereHas('buku', function ($query) {
+            $query->where('penulis_id', Auth::id());
+        })->count();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('page.user.dashboard', compact('bookCount', 'isiCount'));
     }
 }

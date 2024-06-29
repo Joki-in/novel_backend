@@ -28,4 +28,24 @@ class Buku extends Model
     {
         return $this->belongsTo(User::class, 'penulis_id');
     }
+    public function isi()
+    {
+        return $this->hasMany(Isi::class, 'id_buku');
+    }
+    public function komentar()
+    {
+        return $this->hasMany(Komentar::class, 'id_buku');
+    }
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($buku) {
+            // Hapus semua isi yang terkait dengan buku ini
+            $buku->isi()->delete();
+
+            // Hapus semua komentar yang terkait dengan buku ini
+            $buku->komentar()->delete();
+        });
+    }
 }

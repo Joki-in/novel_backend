@@ -34,13 +34,11 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="menu-header">Main</li>
-                <li class="dropdown {{ Request::path() === 'dashboard' ? 'active' : '' }}">
-                    <a href="/dashboard" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+                <li class="dropdown {{ Request::path() === 'dashboardUser' ? 'active' : '' }}">
+                    <a href="/dashboardUser" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
                 </li>
-                </li>
-                <li class="menu-header">User Lomba</li>
-                <li class="dropdown {{ Request::path() === 'pendaftaran' ? 'active' : '' }}"><a class="nav-link"
-                        href="/pendaftaran"><i data-feather="clipboard"></i><span>Pendaftaran</span></a>
+                <li class="dropdown {{ Request::path() === 'tambahkan-buku' ? 'active' : '' }}"><a class="nav-link"
+                        href="/tambahkan-buku"><i data-feather="clipboard"></i><span>Tambahkan Buku</span></a>
                 </li>
             </ul>
         </aside>
