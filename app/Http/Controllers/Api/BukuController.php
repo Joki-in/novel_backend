@@ -13,6 +13,7 @@ class BukuController extends Controller
     {
         $topLikedBooks = Buku::select('buku.id', 'buku.judul', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id', DB::raw('COUNT(like.id) as like_count'))
             ->leftJoin('like', 'buku.id', '=', 'like.buku_id')
+            ->where('status', 'diterima')
             ->groupBy('buku.id', 'buku.judul', 'buku.sinopsis', 'buku.view', 'buku.genre', 'buku.cover', 'buku.penulis_id')
             ->orderByDesc('like_count')
             ->take(3)
@@ -27,7 +28,7 @@ class BukuController extends Controller
     public function topView()
     {
         // Mengambil 3 buku dengan jumlah view terbanyak, diurutkan secara descending
-        $bukuTerbanyakView = Buku::orderByDesc('view')->limit(4)->get();
+        $bukuTerbanyakView = Buku::orderByDesc('view')->where('status', 'diterima')->limit(4)->get();
 
         return response()->json(['status' => 'success', 'data' => $bukuTerbanyakView], 200);
     }

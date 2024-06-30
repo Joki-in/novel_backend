@@ -30,7 +30,9 @@ class FavoriteBukuController extends Controller
         $bookIds = $likes->pluck('buku_id')->toArray(); // Ubah ke array
 
         // Mengambil data buku berdasarkan id yang terkumpul
-        $books = Buku::whereIn('id', $bookIds)->get();
+        $books = Buku::whereIn('id', $bookIds)
+            ->where('status', 'diterima')
+            ->get();
 
         // Jika tidak ada data buku yang sesuai
         if ($books->isEmpty()) {
