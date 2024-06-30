@@ -50,10 +50,10 @@
                                                         Adult Content
                                                     @endif
                                                 </td>
-                                                <td>
+                                                <td class="text-center">
                                                     {{ $item->penulis->name }}
                                                 </td>
-                                                <td>
+                                                <td class="text-center">
                                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#sinopsisModal{{ $item->id }}">
                                                         View Sinopsis

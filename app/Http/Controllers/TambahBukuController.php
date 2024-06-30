@@ -84,9 +84,52 @@ class TambahBukuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Buku $buku)
     {
-        //
+        // Cek apakah pengguna yang mencoba mengupdate buku adalah penulis buku tersebut
+        if ($buku->penulis_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki hak untuk mengupdate buku ini.');
+        }
+
+        // Validasi input
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'sinopsis' => 'required|string',
+            'genre' => 'required|string|max:255',
+            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'adult_content' => 'required|boolean',
+        ]);
+
+        // Update data buku
+        $buku->judul = $request->input('judul');
+        $buku->sinopsis = $request->input('sinopsis');
+        $buku->genre = $request->input('genre');
+        $buku->status = 'belum diterima';
+        $buku->{'18+'} = $request->input('adult_content');
+
+        // Handle file upload
+        if ($request->hasFile('cover')) {
+            // Hapus cover lama jika ada
+            if ($buku->cover) {
+                $oldCoverPath = public_path('coverbuku/' . $buku->cover);
+                if (file_exists($oldCoverPath)) {
+                    unlink($oldCoverPath);
+                }
+            }
+
+            // Upload cover baru
+            $file = $request->file('cover');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('coverbuku'), $filename);
+
+            // Simpan nama file cover baru
+            $buku->cover = $filename;
+        }
+
+        // Simpan perubahan
+        $buku->save();
+
+        return redirect()->back()->with('success', 'Buku berhasil diupdate!');
     }
 
     /**

@@ -12,10 +12,13 @@ class TerimaBukuController extends Controller
      */
     public function index()
     {
-        $buku = Buku::where('status', 'belum diterima')->with('penulis')->get();
+        $buku = Buku::where('status', 'belum diterima')
+            ->with('penulis')
+            ->orderBy('update_at', 'asc');
 
         return view('page.admin.terimabuku', compact('buku'));
     }
+
     public function terimaBuku($id)
     {
         // Temukan buku berdasarkan ID

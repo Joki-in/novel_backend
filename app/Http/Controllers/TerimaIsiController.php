@@ -9,7 +9,9 @@ class TerimaIsiController extends Controller
 {
     public function index()
     {
-        $isi = Isi::where('status', 'belum diterima')->get();
+        $isi = Isi::where('status', 'belum diterima')
+            ->orderBy('updated_at', 'asc')
+            ->get();
 
         return view('page.admin.terimaisi', compact('isi'));
     }

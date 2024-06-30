@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\TambahIsiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -51,6 +52,15 @@ Route::middleware(['islogin'])->group(function () {
     //tambah buku 
     Route::get('/tambahkan-buku', [TambahBukuController::class, 'index'])->name('tambah-buku.index');
     Route::post('/tambah-buku', [TambahBukuController::class, 'store'])->name('buku.store');
+    Route::put('/buku/{buku}', [TambahBukuController::class, 'update'])->name('buku.update');
     Route::delete('/buku/{buku}', [TambahBukuController::class, 'destroy'])->name('buku.destroy');
+
+    //tambah isi 
+    Route::get('/tambahkan-isi/{id_buku}', [TambahIsiController::class, 'index'])->name('tambah-isi.index');
+    Route::post('/tambah-isi', [TambahIsiController::class, 'store'])->name('isi.store');
+    Route::put('/tambah-isi/{id}', [TambahIsiController::class, 'update'])->name('tambah-isi.update');
+    Route::delete('/tambah-isi/{id}', [TambahIsiController::class, 'destroy'])->name('tambah-isi.destroy');
+
+
 });
 
