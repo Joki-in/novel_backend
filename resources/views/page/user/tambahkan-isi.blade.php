@@ -98,70 +98,71 @@
                 </div>
             </div>
         </div>
-        <!-- Modal for Add Isi -->
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createModalLabel">Tambah Isi</h5>
-                        <!-- Tombol close untuk modal -->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Tampilkan pesan error jika ada -->
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-                        <!-- Tampilkan pesan success jika ada -->
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
 
-                        <form action="{{ route('isi.store') }}" method="POST" id="createForm">
-                            @csrf
-                            <div class="form-group">
-                                <label for="buku_id">Judul Buku</label>
-                                <input value="{{ $item->buku->judul }}" type="text" id="judul_buku" name="judul_buku"
-                                    class="form-control" readonly>
-                                <input value="{{ $item->buku->id }}" type="hidden" id="buku_id" name="buku_id">
-                            </div>
-                            <div class="form-group">
-                                <label for="chapter">Judul Chapter</label>
-                                <input type="text" id="chapter" name="chapter" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="isi">Isi</label>
-                                <div class="toolbar">
-                                    <button type="button" class="btn btn-light" id="boldButton"
-                                        onclick="toggleStyle('bold')"><b>B</b></button>
-                                    <button type="button" class="btn btn-light" id="italicButton"
-                                        onclick="toggleStyle('italic')"><i>I</i></button>
-                                    <button type="button" class="btn btn-light" id="underlineButton"
-                                        onclick="toggleStyle('underline')"><u>U</u></button>
+
+        @foreach ($isi as $item)
+            <!-- Modal for Add Isi -->
+            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabel">Tambah Isi</h5>
+                            <!-- Tombol close untuk modal -->
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Tampilkan pesan error jika ada -->
+                            @if (session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
                                 </div>
-                                <div id="isi" name="isi" class="note-editable card-block"
-                                    contenteditable="true"
-                                    style="min-height: 150px; height: 238px; border: 1px solid #ced4da; padding: 10px;">
+                            @endif
+                            <!-- Tampilkan pesan success jika ada -->
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
                                 </div>
-                                <!-- Hidden textarea untuk mengirim data -->
-                                <textarea id="isi_hidden" name="isi" style="display:none;"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
-                            </div>
-                        </form>
+                            @endif
+
+                            <form action="{{ route('isi.store') }}" method="POST" id="createForm">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="buku_id">Judul Buku</label>
+                                    <input value="{{ $item->buku->judul }}" type="text" id="judul_buku"
+                                        name="judul_buku" class="form-control" readonly>
+                                    <input value="{{ $item->buku->id }}" type="hidden" id="buku_id" name="buku_id">
+                                </div>
+                                <div class="form-group">
+                                    <label for="chapter">Judul Chapter</label>
+                                    <input type="text" id="chapter" name="chapter" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="isi">Isi</label>
+                                    <div class="toolbar">
+                                        <button type="button" class="btn btn-light" id="boldButton"
+                                            onclick="toggleStyle('bold')"><b>B</b></button>
+                                        <button type="button" class="btn btn-light" id="italicButton"
+                                            onclick="toggleStyle('italic')"><i>I</i></button>
+                                        <button type="button" class="btn btn-light" id="underlineButton"
+                                            onclick="toggleStyle('underline')"><u>U</u></button>
+                                    </div>
+                                    <div id="isi" name="isi" class="note-editable card-block"
+                                        contenteditable="true"
+                                        style="min-height: 150px; height: 238px; border: 1px solid #ced4da; padding: 10px;">
+                                    </div>
+                                    <!-- Hidden textarea untuk mengirim data -->
+                                    <textarea id="isi_hidden" name="isi" style="display:none;"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        @foreach ($isi as $item)
             <!-- Modal for View Isi -->
             <div class="modal fade" id="isiModal{{ $item->id }}" tabindex="-1"
                 aria-labelledby="isiModalLabel{{ $item->id }}" aria-hidden="true">
