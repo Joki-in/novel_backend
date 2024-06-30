@@ -16,11 +16,15 @@ class TambahIsiController extends Controller
      */
     public function index($id_buku)
     {
+        // Decrypt the ID
         $id_buku = Crypt::decrypt($id_buku);
-        $bukus = Buku::where('id', $id_buku)->get();
-        $isi = Isi::where('id_buku', $id_buku)->with('buku')->get();
 
-        return view('page.user.tambahkan-isi', compact('isi', 'bukus'));
+        // Retrieve the book by its ID
+        $buku = Buku::find($id_buku); // Menggunakan find untuk mengambil satu objek
+
+        // Retrieve the associated 'isi' entries
+        $isi = Isi::where('id_buku', $id_buku)->with('buku')->get();
+        return view('page.user.tambahkan-isi', compact('buku', 'isi'));
     }
 
     /**
